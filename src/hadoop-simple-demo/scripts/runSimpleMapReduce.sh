@@ -5,4 +5,4 @@ export HADOOP_CLASSPATH=./target/classes/
 
 echo $HADOOP_CLASSPATH
 
-hadoop com.jf.hadoop_examples.main.MaxValue input/input-data.txt output
+hadoop MaxValue -conf conf/hadoop-local.xml input/input-data.txt output
