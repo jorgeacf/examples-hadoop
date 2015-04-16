@@ -1,8 +1,7 @@
 #!/bin/bash
 
-
 export HADOOP_CLASSPATH=./target/classes/
 
-echo $HADOOP_CLASSPATH
+rm -r output
 
-hadoop MaxValue -conf conf/hadoop-local.xml input/input-data.txt output
+hadoop MaxValue input/input-data.txt output
