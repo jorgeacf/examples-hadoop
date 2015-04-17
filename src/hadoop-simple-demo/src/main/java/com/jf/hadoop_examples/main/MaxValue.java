@@ -1,3 +1,4 @@
+package com.jf.hadoop_examples.main;
 import java.io.IOException;
 
 import org.apache.hadoop.fs.Path;
