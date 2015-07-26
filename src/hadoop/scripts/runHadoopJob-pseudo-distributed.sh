@@ -1,9 +1,10 @@
 
-mvn compile package
+mvn clean compile package
 
 #clear
 
 export HADOOP_CLASSPATH=./target/classes/  # Hadoop ClassPath
+#export HADOOP_MAPRED_HOME=$HADOOP_PATH
 
 #export HADOOP_MAPRED_HOME=$HADOOP_MAPRED_HOME:./target/classes/
 ##export YARN_HOME=./target/classes/
@@ -18,18 +19,19 @@ $HADOOP_PATH/bin/hdfs dfs -put input /user/jorgeacf/
 #$HADOOP_PATH/bin/hdfs dfs -put cache/file1.txt cache/file1.txt
 #$HADOOP_PATH/bin/hadoop com.jorgefigueiredo.hadoop.demos.jobs.JobWithDistributedCache
 
-#$HADOOP_PATH/bin/hdfs dfs -put ./target/hadoop_job_configuration-0.0.1-SNAPSHOT.jar hadoop_job_configuration-0.0.1-SNAPSHOT.jar
+cp target/hadoop_demos-1.0.jar /opt/apache_hadoop/share/hadoop/yarn/
 
-cp target/*.jar target/a.jar
+$HADOOP_PATH/bin/hadoop jar $HADOOP_PATH/share/hadoop/yarn/hadoop_demos-1.0.jar com.jorgefigueiredo.demos.hadoop.jobs.JobCancel --jar $HADOOP_PATH/share/hadoop/yarn/hadoop_demos-1.0.jar --shell_command date --num_containers 1 --master_memory 128
 
-cp target/a.jar /opt/apache_hadoop/share/hadoop/yarn/
-
-$HADOOP_PATH/bin/yarn com.jorgefigueiredo.hadoop.demos.jobs.HadoopJobRunner3
-
-rm /opt/apache_hadoop/share/hadoop/yarn/a.jar
+rm /opt/apache_hadoop/share/hadoop/yarn/hadoop_demos-1.0.jar
 
 rm -r output
 
 $HADOOP_PATH/bin/hdfs dfs -get output output
 
 cat output/part*
+
+
+
+
+ #$HADOOP_PATH/bin/hadoop jar $HADOOP_PATH/share/hadoop/yarn/hadoop-yarn-applications-distributedshell-2.7.0.jar org.apache.hadoop.yarn.applications.distributedshell.Client --jar $HADOOP_PATH/share/hadoop/yarn/hadoop-yarn-applications-distributedshell-2.7.0.jar --shell_command date --num_containers 1 --master_memory 123
