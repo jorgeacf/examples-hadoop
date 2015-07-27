@@ -10,6 +10,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.JobStatus.State;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -28,11 +29,12 @@ public class JobCancel extends Configured implements Tool
     }
 
 	public int run(String[] args) throws Exception {
-		
+
 		Configuration conf = getConf();
 
 		final Job job = Job.getInstance(conf);
 		
+		job.setJobName("JobCancel");
 		job.setJarByClass(JobCancel.class);
 		
 		
@@ -54,20 +56,51 @@ public class JobCancel extends Configured implements Tool
 		FileOutputFormat.setOutputPath(job, new Path("output"));
 		//job.setOutputFormatClass(KeyValueTextOutputFormat.class);
 
-		
 		new Thread(new Runnable() {
 
 			public void run() {
 				
-				try {
+				
+				State state = null;
+				
+				do {
+					try {
+						
+						state = job.getJobState();
+						
+						
+					} catch (Exception e) {
+						//e.printStackTrace();
+						
+						// Just ignore in this example. If the method getJobState is called 
+						// before the job is in a valid state an exception is thrown.
+						
+					} 
 					
-					Thread.sleep(3 * 1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+					
+					if(state == State.RUNNING) {
+						break;
+					}
+					
+					System.out.println("[CANCEL] Waiting for job to start... JobStatus=[" + state + "]");
+					
+					try {
+						
+						Thread.sleep(3 * 1000);
+						
+					} catch (InterruptedException e) {
+						
+						e.printStackTrace();
+					}
+					
 				}
+				while(true);
 				
 				try {
+					System.out.println("[CANCEL] About to kill the job...");
 					job.killJob();
+					System.out.println("[CANCEL] Job killed...");
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
