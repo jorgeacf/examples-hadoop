@@ -1,5 +1,5 @@
 
-mvn clean compile package
+#mvn clean compile package
 
 #clear
 
@@ -21,7 +21,8 @@ $HADOOP_PATH/bin/hdfs dfs -put input /user/jorgeacf/
 
 cp target/hadoop_demos-1.0.jar /opt/apache_hadoop/share/hadoop/yarn/
 
-$HADOOP_PATH/bin/hadoop jar $HADOOP_PATH/share/hadoop/yarn/hadoop_demos-1.0.jar com.jorgefigueiredo.demos.hadoop.jobs.JobCounters --jar $HADOOP_PATH/share/hadoop/yarn/hadoop_demos-1.0.jar --shell_command date --num_containers 1
+export HADOOP_ROOT_LOGGER=INFO,console;$HADOOP_PATH/bin/hadoop jar $HADOOP_PATH/share/hadoop/yarn/hadoop_demos-1.0.jar com.jorgefigueiredo.demos.hadoop.jobs.JobCounters --jar $HADOOP_PATH/share/hadoop/yarn/hadoop_demos-1.0.jar --shell_command date --num_containers 1 
+#$HADOOP_PATH/bin/hadoop jar $HADOOP_PATH/share/hadoop/yarn/hadoop_demos-1.0.jar com.jorgefigueiredo.demos.hadoop.jobs.HadoopJobRunner1 --jar $HADOOP_PATH/share/hadoop/yarn/hadoop_demos-1.0.jar --shell_command date --num_containers 1 
 
 rm /opt/apache_hadoop/share/hadoop/yarn/hadoop_demos-1.0.jar
 
