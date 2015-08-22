@@ -48,11 +48,11 @@ public class JobCounters extends Configured implements Tool
 		job.setOutputValueClass(Text.class);
 		
 		// Input
-		FileInputFormat.addInputPath(job, new Path("input"));
+		FileInputFormat.addInputPath(job, new Path("input/simple"));
 		job.setInputFormatClass(TextInputFormat.class);
 		
 		// Output
-		FileOutputFormat.setOutputPath(job, new Path("output"));
+		FileOutputFormat.setOutputPath(job, new Path("output/simple"));
 		//job.setOutputFormatClass(KeyValueTextOutputFormat.class);
 
 		int result = job.waitForCompletion(true) ? 0 : 1;
@@ -61,7 +61,7 @@ public class JobCounters extends Configured implements Tool
 		
 		Counter counter = counters.findCounter(CUSTOM_COUNTERS.NUMBER_OF_RECORDS);
 		
-		System.out.println("Number of records: " + counter.getValue());
+		System.out.println("[JOB RESULTS] Number of records: " + counter.getValue());
 		
 		return result;
 	}

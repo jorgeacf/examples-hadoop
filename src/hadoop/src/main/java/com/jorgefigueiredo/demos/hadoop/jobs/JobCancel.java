@@ -49,11 +49,11 @@ public class JobCancel extends Configured implements Tool
 		job.setOutputValueClass(Text.class);
 		
 		// Input
-		FileInputFormat.addInputPath(job, new Path("input"));
+		FileInputFormat.addInputPath(job, new Path("input/simple"));
 		job.setInputFormatClass(TextInputFormat.class);
 		
 		// Output
-		FileOutputFormat.setOutputPath(job, new Path("output"));
+		FileOutputFormat.setOutputPath(job, new Path("output/simple"));
 		//job.setOutputFormatClass(KeyValueTextOutputFormat.class);
 
 		new Thread(new Runnable() {
